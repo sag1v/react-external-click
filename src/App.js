@@ -12,7 +12,7 @@ class Menu extends Component {
   render() {
     const { show } = this.props;
     return (
-      <div>
+      <React.Fragment>
         <div>Menu {show ? '-' : '+'}</div>
         <div style={{ height: show ? '100px' : '0px', overflow: 'hidden', transition: 'all 500ms ease' }}>
           <ul>
@@ -21,7 +21,7 @@ class Menu extends Component {
             <li>3</li>
           </ul>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -30,9 +30,12 @@ class Menu extends Component {
 class App extends Component {
   render() {
     return (
-      <div className="app">
+      <div>
         <ExternalClick render={Item} />
-        <ExternalClick render={isExternalClick => (<Menu show={!isExternalClick} />)} />
+        
+        <ExternalClick>
+          {isExternalClick => (<Menu show={!isExternalClick} />)}
+        </ExternalClick>
       </div>
     );
   }
