@@ -1,10 +1,13 @@
 import React from "react";
+import { findDOMNode } from 'react-dom'
 import propTypes from 'prop-types';
+import isRequiredIf from 'react-proptype-conditional-require';
 
 class ExternalClick extends React.Component {
 
     static propTypes = {
-        render: propTypes.func.isRequired
+        render: isRequiredIf(propTypes.func, props => !props.children, 'render is required when no children are passed'),
+        children: isRequiredIf(propTypes.func, props => !props.render, 'children are required when the render prop is not passed'),
     }
 
     state = {
@@ -12,6 +15,7 @@ class ExternalClick extends React.Component {
     }
 
     componentDidMount() {
+        this.ref = findDOMNode(this);
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
@@ -20,23 +24,23 @@ class ExternalClick extends React.Component {
     }
 
     handleClickOutside = e => {
-        const clickedOutside = this.ref && this.ref.contains && !this.ref.contains(e.target);
-        this.setState({ clickedOutside });
-    }
+        if (this.ref && this.ref.contains) {
+            const clickedOutside = !this.ref.contains(e.target);
+            this.setState({ clickedOutside });
+        }
 
-    attachRef = node => {
-        this.ref = node;
     }
 
     render() {
         const { children, render } = this.props;
         const { clickedOutside } = this.state;
-        const renderingFunc = render || children || function () { return <div></div> };
-        const Child = renderingFunc(clickedOutside);
-        const WithRef = React.cloneElement(Child, {
-            ref: this.attachRef
-        });
-        return typeof WithRef.type === 'string' ? WithRef : <div ref={this.attachRef}>{Child}</div>;
+        const renderingFunc = render || children;
+        
+        if (typeof renderingFunc === 'function') {
+            return renderingFunc(clickedOutside);
+        } else {
+            return null
+        }
     }
 }
 

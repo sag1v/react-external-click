@@ -12,16 +12,16 @@ class Menu extends Component {
   render() {
     const { show } = this.props;
     return (
-      <React.Fragment>
-        <div>Menu {show ? '-' : '+'}</div>
-        <div style={{ height: show ? '100px' : '0px', overflow: 'hidden', transition: 'all 500ms ease' }}>
+      <div className="menu-wrapper">
+        <div className="menu-head">Menu {show ? '-' : '+'}</div>
+        <div className={`menu-list ${!show ? 'menu-list-closed' : ''}`}>
           <ul>
             <li>1</li>
             <li>2</li>
             <li>3</li>
           </ul>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -30,7 +30,7 @@ class Menu extends Component {
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="app">
         <ExternalClick render={Item} />
         
         <ExternalClick>

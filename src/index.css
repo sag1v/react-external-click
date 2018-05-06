@@ -24,3 +24,23 @@
 .item.external{
     background-color: #34A853;
 }
+
+.menu-wrapper{
+    padding: 15px;
+    box-shadow: 0 0 2px 1px #333;
+}
+.menu-head{
+    cursor: pointer;
+}
+
+.menu-list{
+    height: 100px;
+    transition: all 500ms ease;
+    overflow: hidden;
+}
+.menu-list-closed{
+    height: 0;
+}
+.menu-list ul{
+    list-style-type: none;
+}
