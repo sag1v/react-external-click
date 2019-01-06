@@ -1,3 +1,7 @@
+# ⚠️ Deprecated ⚠️
+## You should use [react-trap](https://github.com/sag1v/react-trap) with better options and flexibility
+
+---
 # react-external-click
 
 #### Capturing clicks outside your component.
